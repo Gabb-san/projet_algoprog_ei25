@@ -142,34 +142,43 @@ float intergration(float d, float f, Polynome P){
 }
 
 Polynome DL_enA_ordreN(Polynome P, float a, int n){
-    //Initialisatiopn du polynome résultant du DL :
     Polynome DL;
-    DL.degre = n;
-    DL.liste = (float*)malloc((n + 1)*sizeof(float));
-    DL.liste[0] = evaluation_polynome(P, a);
-    int i;
-    for(i = 1; i <= n; i++){
-        DL.liste[i] = 0;
-    }
-
-    //Calcul du DL :
-    Polynome Facteur; //Polynome de forme (X - a)
-    Facteur.degre = 1;
-    Facteur.liste = (float*)malloc(2*sizeof(float));
-    Facteur.liste[0] = (-1)*a;
-    Facteur.liste[1] = 1;
-    
-    int j;
-    for(j = 1; j <= n; j++){ //Création et addition à DL des termes de la formule donnée.
-        Polynome P_temp;
-        P_temp = puissance_polynomiale(Facteur, j); //Polynome de la forme (X - a)^j
-        int k;
-        for(k = 1; k <= n; k++){ //Création du terme complet de rang j dans le polynome de la formule
-            P_temp.liste[k] *= evaluation_polynome(derivee_nieme(P, k), a)/(float)factorielle(k);
+    if(n <= P.degre){
+        DL.degre = n;
+        DL.liste = (float*)malloc((n + 1)*sizeof(float));
+        DL.liste[0] = evaluation_polynome(P, a);
+        int i;
+        for(i = 1; i <= n; i++){
+            DL.liste[i] = 0;
         }
-        DL = addition(DL, P_temp);
-        free(P_temp.liste);
+
+        //Calcul du DL :
+        Polynome Facteur; //Polynome de forme (X - a)
+        Facteur.degre = 1;
+        Facteur.liste = (float*)malloc(2*sizeof(float));
+        Facteur.liste[0] = (-1)*a;
+        Facteur.liste[1] = 1;
+        
+        int j;
+        for(j = 1; j <= n; j++){ //Création et addition à DL des termes de la formule donnée.
+            printf("j = %d\n\n", j);
+            Polynome P_temp;
+            P_temp = puissance_polynomiale(Facteur, j); //Polynome de la forme (X - a)^j
+            afficher_polynome(P_temp);
+
+            int k;
+            for(k = 1; k <= n; k++){ //Création du terme complet de rang j dans le polynome de la formule
+                printf("j, k = %d, %d\n", j, k);
+                P_temp.liste[k] *= evaluation_polynome(derivee_nieme(P, k), a)/(float)factorielle(k);
+            }
+            DL = addition(DL, P_temp);
+            afficher_polynome(DL);
+            free(P_temp.liste);
+        }
     }
+    else
+        DL = P; //Si l'ordre du DL est supérieur au degré du polynome, le DL est le polynome.
+
     return DL;
 }
 

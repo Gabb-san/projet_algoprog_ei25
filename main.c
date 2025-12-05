@@ -50,7 +50,7 @@ int main(){
     */
 
     //création et affichage de la dérivée_nième de P1
-    Polynome DL = DL_enA_ordreN(P1, 2, 5);
+    Polynome DL = DL_enA_ordreN(P1, 2, 1);
     printf("DL de P1 au point 2 à l'ordre 5 : ");
     afficher_polynome(DL);
     return 0;
