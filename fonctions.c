@@ -151,7 +151,7 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
         for(i = 1; i <= n; i++){
             DL.liste[i] = 0;
         }
-
+        printf("degré du DL : %d\n", DL.degre);
         //Calcul du DL :
         Polynome Facteur; //Polynome de forme (X - a)
         Facteur.degre = 1;
@@ -161,16 +161,14 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
         
         int j;
         for(j = 1; j <= n; j++){ //Création et addition à DL des termes de la formule donnée.
-            printf("j = %d\n\n", j);
             Polynome P_temp;
             P_temp = puissance_polynomiale(Facteur, j); //Polynome de la forme (X - a)^j
-            afficher_polynome(P_temp);
+            float facteur_rang_j = evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
 
             int k;
-            for(k = 1; k <= n; k++){ //Création du terme complet de rang j dans le polynome de la formule
-                printf("j, k = %d, %d\n", j, k);
-                P_temp.liste[k] *= evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
-            }
+            for(k = 0; k <= P_temp.degre; k++) //Création du terme complet de rang j dans le polynome de la formule
+                P_temp.liste[k] *= facteur_rang_j;
+            
             DL = addition(DL, P_temp);
             afficher_polynome(DL);
             free(P_temp.liste);
