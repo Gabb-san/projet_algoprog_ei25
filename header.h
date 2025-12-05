@@ -49,6 +49,9 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n);
 int maxm(int a, int b); 
 //Renvoie l'entier max entre a et b.
 
+int minm(int a, int b);
+//Renvoie l'entier max entre a et b.
+
 float puissance_n(float puissance, int exposant);
 //Calcul de puissance à l'exposant n.
 
