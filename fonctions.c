@@ -169,7 +169,7 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
             int k;
             for(k = 1; k <= n; k++){ //Création du terme complet de rang j dans le polynome de la formule
                 printf("j, k = %d, %d\n", j, k);
-                P_temp.liste[k] *= evaluation_polynome(derivee_nieme(P, k), a)/(float)factorielle(k);
+                P_temp.liste[k] *= evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
             }
             DL = addition(DL, P_temp);
             afficher_polynome(DL);
