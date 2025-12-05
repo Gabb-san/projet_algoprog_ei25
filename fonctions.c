@@ -48,31 +48,23 @@ Polynome addition(Polynome P1, Polynome P2){
     Polynome P_result;
     P_result.degre = maxm(P1.degre, P2.degre);
     P_result.liste = (float*)malloc((P_result.degre + 1)*sizeof(float));
-    int deg = P_result.degre;
-    //Disjonction des cas selon l'égalité ou l'inégalité des degrés :
-    if(P1.degre == P2.degre)
-        P_result.liste[deg] = P1.liste[deg] + P2.liste[deg];
-    else if (P1.degre == P_result.degre){
-        int i;
-        for(i = 0; i <= P2.degre; i++)
-            P_result.liste[i] = P1.liste[i] + P2.liste[i];
+
+    int deg = P_result.degre, deg_min = minm(P1.degre, P2.degre);
+
+    int i;
+    for(i = 0; i <= deg_min; i++)
+        P_result.liste[i] = P1.liste[i] + P2.liste[i];
+    
+    if(P1.degre < P2.degre){
         int j;
-        for(j = P2.degre + 1; j <= P_result.degre; j++){
-            P_result.liste[j] = P1.liste[j];
-            //printf("P_result.liste[j] = %f\n", P_result.liste[j]);
-        }
-    }
-    else if(P2.degre == P_result.degre){
-        int i;
-        for(i = 0; i <= P1.degre; i++)
-            P_result.liste[i] = P1.liste[i] + P2.liste[i];
-        int j;
-        for(j = P1.degre + 1; j <= P_result.degre; j++){
+        for(j = P1.degre + 1; j <= P2.degre; j++)
             P_result.liste[j] = P2.liste[j];
-            //printf("P_result.liste[j] = %f\n", P_result.liste[j]);
-        }
     }
-    //Addition des coééficients multipliant une même puissance de X :
+    else if(P1.degre > P2.degre){
+        int j;
+        for(j = P2.degre + 1; j <= P1.degre; j++)
+            P_result.liste[j] = P1.liste[j];
+    }
 
     archivage_addition(P1, P2, P_result);
     return P_result;
@@ -186,6 +178,7 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
             afficher_polynome(DL);
             free(P_temp.liste);
         }
+        free(Facteur.liste);
     }
     else
         DL = P; //Si l'ordre du DL est supérieur au degré du polynome, le DL est le polynome.
