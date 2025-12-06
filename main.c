@@ -3,65 +3,130 @@
 
 
 int main(){
-
-    //création et affichage de deux polynomes P1 et P2
-    Polynome P1 = creer_polynome();
-    printf("\n");
-    printf("P1 = ");
-    afficher_polynome(P1);
-    /*
-    Polynome P2 = creer_polynome();
-    printf("P2 = ");
-    afficher_polynome(P2);
+    //Affichage du menu  
+    printf("Librairie d'opérateurs polynomiaux de Paul CHIRON et Gabriel CHATELAIN\nBienvenu.\n\n");
     
-    //création et affichage de la dérivée de P1
-    Polynome P1_prime = derivee(P1);
-    printf("derivée de P1 = ");
-    afficher_polynome(P1_prime);
-    printf("\n");
-    
-    //addition P1 + P2
-    Polynome P1plusP2 = addition(P1, P2);
-    printf("P1 + P2 = ");
-    afficher_polynome(P1plusP2);
-    printf("\n");
+    int choix = -1;
+    while(choix){
+        printf("Que voulez-vous faire ?\n");
+        printf(" 1 - Créer un polynome ;\n");
+        printf(" 2 - Additionner deux polynomes ;\n");
+        printf(" 3 - Multiplier deux polynomes ;\n");
+        printf(" 4 - Dériver un polynome ;\n");
+        printf(" 5 - Dériver n fois un polynome, avec n au choix ;\n");
+        printf(" 6 - Intégrer un polynome sur un intervalle ;\n");
+        printf(" 7 - Trouver une racine d'un polynome sur un intervalle ;\n");
+        printf(" 8 - Calculer le D.L. d'un polynome en un point, à un ordre choisi ;\n");
+        printf(" 9 - Effacer l'historique ;\n");
+        printf(" 0 - Sortir du menu ;\n");
+        printf("\nVotre choix : ");
+        scanf("%d", &choix);
 
-    //produit P1*P2
-    Polynome P1foisP2 = produit(P1, P2);
-    printf("P1 * P2 = ");
-    afficher_polynome(P1foisP2);
-    printf("\n");
+        switch(choix){
+            case 1 : //Création d'un polynome P
+                Polynome P = creer_polynome();
+                printf("\n");
+                printf("Création de P = ");
+                afficher_polynome(P);
+                archivage_creation(P);
+                printf("\n");
+                break;
 
-    //integration de P1 sur [1, 2]
-    float d, f; //début et fin de l'intervalle d'intégration
-    printf("Bornes de l'intervalle d'intégration [d, f]:\n");
-    printf("d = ");
-    scanf("%f", &d);
-    printf("f = ");
-    scanf("%f", &f);
-    printf("l x'intégrale de P1 sur [%f, %f] est %f\n", d, f, intergration(d, f, P1));
-    
-     //création et affichage de la dérivée_nième de P1
-    Polynome DL = DL_enA_ordreN(P1, 2, 3);
-    printf("DL de P1 au point 2 à l'ordre 3 : ");
-    afficher_polynome(DL);
-    */
-    //calcul d'une racine d'un polynome sur [a, b];
-    float racine = Racine_P(P1, -4, 4, 0.001);
-    if(racine >= -4){
-        printf("racine de P1 sur [-4, 4] : %f\n", racine);
-        printf("P(%f) = %f\n", racine, evaluation_polynome(P1, racine));
+            case 2:
+                Polynome P1 = creer_polynome(), P2 = creer_polynome();
+                Polynome P1plusP2 = addition(P1, P2);
+                printf("P1 + P2 = ");
+                afficher_polynome(P1plusP2);
+                archivage_addition(P1, P2, P1plusP2);
+                free(P1.liste);
+                free(P2.liste);
+                printf("\n");
+                break;
+            
+            case 3:
+                Polynome P3 = creer_polynome(), P4 = creer_polynome();
+                Polynome P3foisP4 = produit(P3, P4);
+                printf("P3 * P4 = ");
+                afficher_polynome(P3foisP4);
+                archivage_produit(P3, P4, P3foisP4);
+                free(P3.liste);
+                free(P4.liste);
+                printf("\n");
+                break;
+
+            case 4: //Dérivation d'un polynome P
+                Polynome P5 = creer_polynome();
+                Polynome P5_prime = derivee(P5);
+                printf("derivée de P5 = ");
+                afficher_polynome(P5_prime);
+                free(P5.liste);
+                free(P5_prime.liste);
+                printf("\n");
+                break;
+            
+            case 6:
+                Polynome P7 = creer_polynome();
+                float d, f; //début et fin de l'intervalle d'intégration
+                printf("Bornes de l'intervalle d'intégration [d, f]:\n");
+                printf("d = ");
+                scanf("%f", &d);
+                printf("f = ");
+                scanf("%f", &f);
+                float integrale = intergration(d, f, P1);
+                printf("Intégrale de P1 sur [%f, %f] = %f\n", d, f, integrale);
+                archivage_integrale(P7, d, f, integrale);
+                free(P7.liste);
+                printf("\n");
+                break;
+
+            case 7:
+                Polynome P8 = creer_polynome();
+                float a;
+                int n;
+                printf("Point de DL : a = ");
+                scanf("%f", &a);
+                printf("Ordre du DL n = ");
+                scanf("%d", &n);
+                Polynome DL = DL_enA_ordreN(P8, a, n);
+                printf("DL de P1 au point %f à l'ordre %d : ", a, n);
+                afficher_polynome(DL);
+                archivage_DL(P8, DL, a, n);
+                free(P8.liste);
+                free(DL.liste);
+                printf("\n");
+                break;
+
+            case 8:
+                Polynome P9 = creer_polynome();
+                float D, F, precision;
+                printf("Bornes de l'intervalle [d, f]:\n");
+                printf("d = ");
+                scanf("%f", &D);
+                printf("f = ");
+                scanf("%f", &F);
+                printf("Précision : p = ");
+                scanf("%f", &precision);
+
+                float racine = Racine_P(P9, D, F, precision);
+                if(racine >= D){
+                    printf("racine de P1 sur [%f, %f] : %f\n", D, F, racine);
+                    printf("P(%f) = %f\n", racine, evaluation_polynome(P9, racine));
+                }
+                else printf("Le polynome n'a pas de racine réelle sur [%f, %f].\n", D, F);
+                free(P9.liste);
+                printf("\n");
+                break;
+            
+            case 9:
+                reset_log();
+                printf("Historique effacé.\n");
+                printf("\n");
+                break;
+            
+            default :
+                printf("Ce choix n'est pas dans la liste\n");
+                break;
+        }
     }
-
-    /*
-    //libération des listes de coéfficients de tous les polynomes créés et nettoyage de l'historique 
-    free(P1.liste);
-    free(P2.liste);
-    free(P1_prime.liste);
-    free(P1plusP2.liste);
-    free(P1foisP2.liste);
-    free(DL.liste);
-    */    
-    //reset_log();
     return 0;
 }

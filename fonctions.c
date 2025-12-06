@@ -23,7 +23,6 @@ Polynome creer_polynome(){
             //l'exposant correspond à l'indice du coéfficient dans le tableau.
         }
     }
-    //archivage_creation(P);
     return P;
 }
 
@@ -65,8 +64,6 @@ Polynome addition(Polynome P1, Polynome P2){
         for(j = P2.degre + 1; j <= P1.degre; j++)
             P_result.liste[j] = P1.liste[j];
     }
-
-    //archivage_addition(P1, P2, P_result);
     return P_result;
 }
  
@@ -86,7 +83,6 @@ Polynome produit(Polynome P1, Polynome P2){
             P_result.liste[j+i] += P1.liste[i]*P2.liste[j]; 
             //Les coéfficients multipliant une même puissance de X s'additionnent sans se remplacer.
     }
-    //archivage_produit(P1, P2, P_result);
     return P_result;
 }
 
@@ -142,7 +138,6 @@ float intergration(float d, float f, Polynome P){
     }
     //printf("%f - %f\n", P_f, P_d);
     integrale = P_f - P_d;
-    //archivage_integrale(P, d, f, integrale);
     return P_f - P_d;
 }
 
@@ -181,7 +176,6 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
     }
     else
         DL = P; //Si l'ordre du DL est supérieur au degré du polynome, le DL est le polynome.
-    //archivage_DL(P, DL, a, n);
     return DL;
 }
 
