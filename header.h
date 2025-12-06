@@ -43,6 +43,8 @@ float intergration(float d, float f, Polynome P);
 Polynome DL_enA_ordreN(Polynome P, float a, int n);
 //Calcule le DL à l'ordre n au point a du polynome P.
 
+float Racine_P(Polynome P, float a, float b, float precision);
+//Culcule une racine de P sur [a, b] à une précision près donnée.
 
 // OPERATEUR MATHEMATIQUES NON-POLYNOMIAUX //
 
@@ -58,7 +60,8 @@ float puissance_n(float puissance, int exposant);
 int factorielle(int n);
 //Calcule n! = n*(n-1)*(n-2)*...*2*1.
 
-
+float val_abs(float x);
+//Calcule la valeur absolue du réel x;
 
 // IMPRESSION DANS LE LOG //
 
@@ -79,6 +82,12 @@ void archivage_derivation(Polynome P, Polynome P_deriv);
 
 void archivage_integrale(Polynome P, float d, float f, float integrale);
 //Print une phrase de la forme INTEGRATION : intégrale sur [d, f] de [polynome] = [intégrale] dans le log
+
+void archivage_DL(Polynome P, Polynome DL, float a, int n);
+//Print une phrase de la forme DL : [polynome] = [DL du polynome] + o(X - a) dans le log, avec a le point autour duquel on fait le DL.
+
+void archivage_racine(Polynome P, float racine, float a, float b, float precision);
+//Print une phrase de la forme RACINE : [racine] est une racine de [polynome] sur [a, b] à une précision de [precision] dans le log.
 
 void reset_log();
 //Efface tous les archivages de l'historique.

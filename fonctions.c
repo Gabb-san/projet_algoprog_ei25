@@ -23,7 +23,7 @@ Polynome creer_polynome(){
             //l'exposant correspond à l'indice du coéfficient dans le tableau.
         }
     }
-    archivage_creation(P);
+    //archivage_creation(P);
     return P;
 }
 
@@ -66,7 +66,7 @@ Polynome addition(Polynome P1, Polynome P2){
             P_result.liste[j] = P1.liste[j];
     }
 
-    archivage_addition(P1, P2, P_result);
+    //archivage_addition(P1, P2, P_result);
     return P_result;
 }
  
@@ -86,7 +86,7 @@ Polynome produit(Polynome P1, Polynome P2){
             P_result.liste[j+i] += P1.liste[i]*P2.liste[j]; 
             //Les coéfficients multipliant une même puissance de X s'additionnent sans se remplacer.
     }
-    archivage_produit(P1, P2, P_result);
+    //archivage_produit(P1, P2, P_result);
     return P_result;
 }
 
@@ -107,7 +107,7 @@ Polynome derivee(Polynome P){
     for(i = 1; i <= derv.degre; i++){
         derv.liste[i] = P.liste[i + 1]*(i + 1);
     }
-    archivage_derivation(P, derv);
+    //archivage_derivation(P, derv);
     return derv;
 }
 
@@ -142,7 +142,7 @@ float intergration(float d, float f, Polynome P){
     }
     //printf("%f - %f\n", P_f, P_d);
     integrale = P_f - P_d;
-    archivage_integrale(P, d, f, integrale);
+    //archivage_integrale(P, d, f, integrale);
     return P_f - P_d;
 }
 
@@ -175,17 +175,30 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
                 P_temp.liste[k] *= facteur_rang_j;
             
             DL = addition(DL, P_temp);
-            afficher_polynome(DL);
             free(P_temp.liste);
         }
         free(Facteur.liste);
     }
     else
         DL = P; //Si l'ordre du DL est supérieur au degré du polynome, le DL est le polynome.
-
+    //archivage_DL(P, DL, a, n);
     return DL;
 }
 
+float Racine_P(Polynome P, float a, float b, float precision){
+    float racines[P.degre];
+    float x_n = b;
+    float P_xn = evaluation_polynome(P, x_n);
+    float P_prime_xn = evaluation_polynome(derivee(P), x_n);
+    while(val_abs(P_xn) >= precision && x_n >= a){
+        x_n = x_n - (P_xn/P_prime_xn);
+        P_xn = evaluation_polynome(P, x_n);
+        P_prime_xn = evaluation_polynome(derivee(P), x_n);
+    }
+    if(x_n < a) printf("Le polynome n'a pas de racine réelle sur [%f, %f].\n", a, b);
+    //archivage_racine(P, x_n, a, b, precision);
+    return x_n;
+}
 
 // OPERATEURS MATHEMATIQUES NON-POLYNOMIAUX //
 
@@ -218,6 +231,13 @@ int factorielle(int n){
         return 1;
     else 
         return n*factorielle(n-1);
+}
+
+float val_abs(float x){
+    float result;
+    if(x < 0) result = (-1)*x;
+    else result = x;
+    return x;
 }
 
 
@@ -280,6 +300,33 @@ void archivage_integrale(Polynome P, float d, float f, float integrale){
     impression_polynome(fichier, P);
     fprintf(fichier, "%s", " = ");
     fprintf(fichier, "%f", integrale);
+    fprintf(fichier, "\n\n");
+    fclose(fichier);
+}
+
+void archivage_DL(Polynome P, Polynome DL, float a, int n){
+    FILE* fichier = fopen("log.txt", "a");
+    fprintf(fichier, "DL : ");
+    impression_polynome(fichier, P);
+    fprintf(fichier, "%s", " = ");
+    impression_polynome(fichier, DL);
+    fprintf(fichier, " + o(X - %f)\n", a);
+    fprintf(fichier, "\n\n");
+    fclose(fichier);
+}
+
+void archivage_racine(Polynome P, float racine, float a, float b, float precision){
+    FILE* fichier = fopen("log.txt", "a");
+    if(racine >= a){
+        fprintf(fichier, "RACINE : %f est une racine de ", racine);
+        impression_polynome(fichier, P);
+        fprintf(fichier, " sur [%f, %f] à une précision de %f", a, b, precision);
+    }
+    else{
+        fprintf(fichier, "RACINE : ");
+        impression_polynome(fichier, P);
+        fprintf(fichier, "n'a pas de racine sur [%f, %f].", a, b);
+    }
     fprintf(fichier, "\n\n");
     fclose(fichier);
 }

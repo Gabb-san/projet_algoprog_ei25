@@ -3,7 +3,7 @@
 
 
 int main(){
-    
+
     //création et affichage de deux polynomes P1 et P2
     Polynome P1 = creer_polynome();
     printf("\n");
@@ -41,18 +41,27 @@ int main(){
     scanf("%f", &f);
     printf("l x'intégrale de P1 sur [%f, %f] est %f\n", d, f, intergration(d, f, P1));
     
-    //libération des listes de coéfficients de tous les polynomes créés et nettoyage de l'historique
-    reset_log(); 
-    free(P1.liste);
-    free(P2.liste);
-    //free(P1_prime.liste);
-    free(P1plusP2.liste);
-    //free(P1foisP2.liste);
-    */
-    //création et affichage de la dérivée_nième de P1
+     //création et affichage de la dérivée_nième de P1
     Polynome DL = DL_enA_ordreN(P1, 2, 3);
     printf("DL de P1 au point 2 à l'ordre 3 : ");
     afficher_polynome(DL);
-    
+    */
+    //calcul d'une racine d'un polynome sur [a, b];
+    float racine = Racine_P(P1, -4, 4, 0.001);
+    if(racine >= -4){
+        printf("racine de P1 sur [-4, 4] : %f\n", racine);
+        printf("P(%f) = %f\n", racine, evaluation_polynome(P1, racine));
+    }
+
+    /*
+    //libération des listes de coéfficients de tous les polynomes créés et nettoyage de l'historique 
+    free(P1.liste);
+    free(P2.liste);
+    free(P1_prime.liste);
+    free(P1plusP2.liste);
+    free(P1foisP2.liste);
+    free(DL.liste);
+    */    
+    //reset_log();
     return 0;
 }
