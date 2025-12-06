@@ -3,13 +3,12 @@
 
 
 int main(){
-    /*
+    
     //Affichage du menu  
     printf("Librairie d'opérateurs polynomiaux de Paul CHIRON et Gabriel CHATELAIN\nBienvenu.\n\n");
-    Polynome liste_polynomes[NB_MAX];
-    int nb_P = nb_polynomes(liste_polynomes);
+    
     int choix = 1;
-    while(choix != 0){
+    while(choix){
         printf("Que voulez-vous faire ?\n");
         printf(" 1 - Créer un polynome ;\n");
         printf(" 2 - Additionner deux polynomes ;\n");
@@ -20,9 +19,7 @@ int main(){
         printf(" 7 - Trouver une racine d'un polynome sur un intervalle ;\n");
         printf(" 8 - Calculer le D.L. d'un polynome en un point, à un ordre choisi ;\n");
         printf(" 9 - Effacer l'historique ;\n");
-        printf(" 10 - Effacer la liste des polynomes\n");
         printf(" 0 - Sortir du menu ;\n");
-
         printf("\nVotre choix : ");
         scanf("%d", &choix);
 
@@ -32,7 +29,6 @@ int main(){
                 break;
 
             case 1 : //Création d'un polynome P
-                
                 Polynome P = creer_polynome();
                 printf("\n");
                 printf("Création de P = ");
@@ -151,6 +147,5 @@ int main(){
     P.liste[7] = -45;
     printf("%f\n", intergration(-7, 2.3, P));
     */
-    
     return 0;
 }
