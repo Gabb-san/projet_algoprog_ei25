@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-
+#define NB_MAX 300
 
 // CREATION ET CALCULS DE POLYNOMES //
 
@@ -63,6 +63,10 @@ int factorielle(int n);
 float val_abs(float x);
 //Calcule la valeur absolue du réel x;
 
+int nb_polynomes(Polynome* liste);
+//Calcule le nombre d'éléments dans une liste de polynomes.
+
+
 // IMPRESSION DANS LE LOG //
 
 void impression_polynome(FILE* fichier, Polynome P);
@@ -91,7 +95,6 @@ void archivage_racine(Polynome P, float racine, float a, float b, float precisio
 
 void reset_log();
 //Efface tous les archivages de l'historique.
-
 
 
 // AFFICHAGE DANS LE TERMINAL //

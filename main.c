@@ -3,11 +3,13 @@
 
 
 int main(){
+    /*
     //Affichage du menu  
     printf("Librairie d'opérateurs polynomiaux de Paul CHIRON et Gabriel CHATELAIN\nBienvenu.\n\n");
-    
-    int choix = -1;
-    while(choix){
+    Polynome liste_polynomes[NB_MAX];
+    int nb_P = nb_polynomes(liste_polynomes);
+    int choix = 1;
+    while(choix != 0){
         printf("Que voulez-vous faire ?\n");
         printf(" 1 - Créer un polynome ;\n");
         printf(" 2 - Additionner deux polynomes ;\n");
@@ -18,12 +20,19 @@ int main(){
         printf(" 7 - Trouver une racine d'un polynome sur un intervalle ;\n");
         printf(" 8 - Calculer le D.L. d'un polynome en un point, à un ordre choisi ;\n");
         printf(" 9 - Effacer l'historique ;\n");
+        printf(" 10 - Effacer la liste des polynomes\n");
         printf(" 0 - Sortir du menu ;\n");
+
         printf("\nVotre choix : ");
         scanf("%d", &choix);
 
         switch(choix){
+            case 0 :
+                printf("A plus tard !\n");
+                break;
+
             case 1 : //Création d'un polynome P
+                
                 Polynome P = creer_polynome();
                 printf("\n");
                 printf("Création de P = ");
@@ -72,7 +81,7 @@ int main(){
                 scanf("%f", &d);
                 printf("f = ");
                 scanf("%f", &f);
-                float integrale = intergration(d, f, P1);
+                float integrale = intergration(d, f, P7);
                 printf("Intégrale de P1 sur [%f, %f] = %f\n", d, f, integrale);
                 archivage_integrale(P7, d, f, integrale);
                 free(P7.liste);
@@ -128,5 +137,20 @@ int main(){
                 break;
         }
     }
+    /*
+    Polynome P;
+    P.degre = 7;
+    P.liste = (float*)malloc(P.degre*sizeof(float));
+    P.liste[0] = 7.5;
+    P.liste[1] = 5.5;
+    P.liste[2] = 0; 
+    P.liste[3] = 66.13;
+    P.liste[4] = 0;
+    P.liste[5] = 0;
+    P.liste[6] = 0;
+    P.liste[7] = -45;
+    printf("%f\n", intergration(-7, 2.3, P));
+    */
+    
     return 0;
 }

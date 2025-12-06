@@ -130,13 +130,16 @@ float intergration(float d, float f, Polynome P){
 
     int i; 
     for(i = 0; i <= P.degre; i++){
+        printf("i = %d\n", i);
         if(P.liste[i] != 0){
-            P_d += (P.liste[i]/((float)i+1))*puissance_n(d, i+1);
-            //printf("%f\n", P.liste[i]/((float)i+1)); //Le programme ne renvoie pas le bon résultat jusqu'à l'insertion de cette ligne ???
-            P_f += (P.liste[i]/((float)i+1))*puissance_n(f, i+1);
+            P_d += (P.liste[i]/((float)(i+1)))*puissance_n(d, i+1);
+            P_f += (P.liste[i]/((float)(i+1)))*puissance_n(f, i+1);
+            printf(" P.liste[i]/((float)(i+1)) = %f\n", P.liste[i]/((float)(i+1))); 
+            printf(" puissance_n(d, i+1) = %f\n", puissance_n(d, i+1));
+            printf(" puissance_n(f, i+1) = %f\n", puissance_n(f, i+1)); 
         }
     }
-    //printf("%f - %f\n", P_f, P_d);
+    printf("%f - %f\n", P_f, P_d);
     integrale = P_f - P_d;
     return P_f - P_d;
 }
@@ -194,7 +197,7 @@ float Racine_P(Polynome P, float a, float b, float precision){
     return x_n;
 }
 
-// OPERATEURS MATHEMATIQUES NON-POLYNOMIAUX //
+// OPERATEURS NON-POLYNOMIAUX //
 
 int maxm(int a, int b){
     int result;
@@ -232,6 +235,16 @@ float val_abs(float x){
     if(x < 0) result = (-1)*x;
     else result = x;
     return x;
+}
+
+int nb_polynomes(Polynome* liste){
+    int nb = 0;
+    Polynome p = liste[0];
+    while(p.liste != NULL){
+        nb++;
+        p = liste[nb];
+    }
+    return nb;
 }
 
 
