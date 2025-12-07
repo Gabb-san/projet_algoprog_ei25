@@ -63,8 +63,6 @@ int factorielle(int n);
 float val_abs(float x);
 //Calcule la valeur absolue du réel x;
 
-int nb_polynomes(Polynome* liste);
-//Calcule le nombre d'éléments dans une liste de polynomes.
 
 
 // IMPRESSION DANS LE LOG //

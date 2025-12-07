@@ -25,7 +25,7 @@ int main(){
 
         switch(choix){
             case 0 :
-                printf("A plus tard !\n");
+                printf("A plus tard !\n\n");
                 break;
 
             case 1 : //Création d'un polynome P
@@ -117,7 +117,11 @@ int main(){
                     printf("racine de P1 sur [%f, %f] : %f\n", D, F, racine);
                     printf("P(%f) = %f\n", racine, evaluation_polynome(P9, racine));
                 }
-                else printf("Le polynome n'a pas de racine réelle sur [%f, %f].\n", D, F);
+                else{
+                    printf("Le polynome n'a pas de racine réelle sur [%f, %f] à une précisiond de %f.\n", D, F, precision);
+                    printf("Conseil : élargissez l'intervalle d'étude, la racine peut en être la borne mais ne pas être détectée à cause de la précision.\n");
+                }
+                archivage_racine(P9, racine, d, f, precision);
                 free(P9.liste);
                 printf("\n");
                 break;
@@ -147,5 +151,6 @@ int main(){
     P.liste[7] = -45;
     printf("%f\n", intergration(-7, 2.3, P));
     */
+    
     return 0;
 }
