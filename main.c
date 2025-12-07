@@ -16,8 +16,8 @@ int main(){
         printf(" 4 - Dériver un polynome ;\n");
         printf(" 5 - Dériver n fois un polynome, avec n au choix ;\n");
         printf(" 6 - Intégrer un polynome sur un intervalle ;\n");
-        printf(" 7 - Trouver une racine d'un polynome sur un intervalle ;\n");
-        printf(" 8 - Calculer le D.L. d'un polynome en un point, à un ordre choisi ;\n");
+        printf(" 7 - Calculer le D.L. d'un polynome en un point, à un ordre choisi ;\n");
+        printf(" 8 - Trouver une racine d'un polynome sur un intervalle ;\n");
         printf(" 9 - Effacer l'historique ;\n");
         printf(" 0 - Sortir du menu ;\n");
         printf("\nVotre choix : ");
