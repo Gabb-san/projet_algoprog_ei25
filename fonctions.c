@@ -187,15 +187,15 @@ float Racine_P(Polynome P, float a, float b, float precision){
     float x_n = b;
     float P_xn = evaluation_polynome(P, x_n);
     float P_prime_xn = evaluation_polynome(derivee(P), x_n);
-    while(val_abs(P_xn) >= precision && x_n >= a){
+    while(val_abs(P_xn) - precision >= 0 && x_n >= a){
         x_n = x_n - (P_xn/P_prime_xn);
         P_xn = evaluation_polynome(P, x_n);
         P_prime_xn = evaluation_polynome(derivee(P), x_n);
     }
-    if(x_n < a) printf("Le polynome n'a pas de racine réelle sur [%f, %f].\n", a, b);
-    //archivage_racine(P, x_n, a, b, precision);
+    //cas où x_n < a traité dans le menu.
     return x_n;
 }
+
 
 // OPERATEURS NON-POLYNOMIAUX //
 
@@ -232,20 +232,17 @@ int factorielle(int n){
 
 float val_abs(float x){
     float result;
-    if(x < 0) result = (-1)*x;
+    if(x < 0.0){
+        result = (-1.0)*x;
+        printf("%f < 0\n", x);
+        printf("-x = %f\n", -x);
+        printf("(-1)*x = %f\n", (-1)*x);
+        printf("res = %f\n", result);
+    }
     else result = x;
-    return x;
+    return result;
 }
 
-int nb_polynomes(Polynome* liste){
-    int nb = 0;
-    Polynome p = liste[0];
-    while(p.liste != NULL){
-        nb++;
-        p = liste[nb];
-    }
-    return nb;
-}
 
 
 // IMPRESSION DANS LE LOG //
