@@ -82,6 +82,9 @@ void archivage_produit(Polynome P1, Polynome P2, Polynome P_res);
 void archivage_derivation(Polynome P, Polynome P_deriv);
 //Print une phrase de la forme DERIVATION de [polynome] : P' = [polynome dérivé] dans le log
 
+void archivage_derivation_nieme(Polynome P, Polynome P_deriv, int n);
+////Print une phrase de la forme DERIVATION n FOIS de [polynome] : P' = [polynome dérivé] dans le log
+
 void archivage_integrale(Polynome P, float d, float f, float integrale);
 //Print une phrase de la forme INTEGRATION : intégrale sur [d, f] de [polynome] = [intégrale] dans le log
 
@@ -104,5 +107,5 @@ void afficher_polynome(Polynome P);
 //Utilise afficher_coeff pour afficher tout le polynome.
 
 
-
+Polynome creer_polynome_2();
 

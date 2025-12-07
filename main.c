@@ -3,7 +3,7 @@
 
 
 int main(){
-    
+    /*
     //Affichage du menu  
     printf("Librairie d'opérateurs polynomiaux de Paul CHIRON et Gabriel CHATELAIN\nBienvenu.\n\n");
     
@@ -69,6 +69,20 @@ int main(){
                 printf("\n");
                 break;
             
+            case 5:
+                Polynome P6 = creer_polynome();
+                int n;
+                printf("Nombre de dérivations : ");
+                scanf("%d", &n);
+                Polynome P6_n_eme = derivee_nieme(P6, n);
+                archivage_derivation_nieme(P6, P6_n_eme, n);
+                printf("P^(%d) = ", n);
+                afficher_polynome(P6_n_eme);
+                free(P6.liste);
+                free(P6_n_eme.liste);
+                printf("\n");
+                break;
+
             case 6:
                 Polynome P7 = creer_polynome();
                 float d, f; //début et fin de l'intervalle d'intégration
@@ -87,15 +101,15 @@ int main(){
             case 7:
                 Polynome P8 = creer_polynome();
                 float a;
-                int n;
+                int k;
                 printf("Point de DL : a = ");
                 scanf("%f", &a);
-                printf("Ordre du DL n = ");
-                scanf("%d", &n);
-                Polynome DL = DL_enA_ordreN(P8, a, n);
-                printf("DL de P1 au point %f à l'ordre %d : ", a, n);
+                printf("Ordre du DL k = ");
+                scanf("%d", &k);
+                Polynome DL = DL_enA_ordreN(P8, a, k);
+                printf("DL de P1 au point %f à l'ordre %d : ", a, k);
                 afficher_polynome(DL);
-                archivage_DL(P8, DL, a, n);
+                archivage_DL(P8, DL, a, k);
                 free(P8.liste);
                 free(DL.liste);
                 printf("\n");
@@ -133,7 +147,7 @@ int main(){
                 break;
             
             default :
-                printf("Ce choix n'est pas dans la liste\n");
+                printf("Ce choix n'est pas dans la liste\n\n");
                 break;
         }
     }
@@ -151,6 +165,35 @@ int main(){
     P.liste[7] = -45;
     printf("%f\n", intergration(-7, 2.3, P));
     */
+    Polynome P;
+    P.degre = 4;
+    P.liste = (float*)malloc(P.degre*sizeof(float));
+    P.liste[0] = 1;
+    P.liste[1] = 1;
+    P.liste[2] = 1; 
+    P.liste[3] = 1;
+    P.liste[4] = 1;
+    float a = 2;
+    float k = 3;
+    Polynome Facteur; //Polynome de forme (X - a)
+    Facteur.degre = 1;
+    Facteur.liste = (float*)malloc(2*sizeof(float));
+    Facteur.liste[0] = (-1)*a;
+    Facteur.liste[1] = 1;
+    int j; 
+    for(j = 0; j <= k; j++){
+        Polynome P_temp = puissance_polynomiale(Facteur, j);
+        afficher_polynome(P_temp);
+        float facteur_rang_j = evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
+        printf("facteur_rang_j = %f\n", facteur_rang_j);
+        int k;
+        for(k = 0; k <= P_temp.degre; k++){ //Création du terme complet de rang j dans le polynome de la formule
+            printf("P_temp.liste[k] = %f\n", P_temp.liste[k]);
+            P_temp.liste[k] *= facteur_rang_j;
+            printf("P_temp.liste[k] = %f\n", P_temp.liste[k]);
+        }
+        free(P_temp.liste);
+    }
     
     return 0;
 }

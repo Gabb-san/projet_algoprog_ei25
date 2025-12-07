@@ -164,10 +164,11 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
         
         int j;
         for(j = 1; j <= n; j++){ //Création et addition à DL des termes de la formule donnée.
-            Polynome P_temp;
-            P_temp = puissance_polynomiale(Facteur, j); //Polynome de la forme (X - a)^j
+            Polynome P_temp = puissance_polynomiale(Facteur, j); //Polynome de la forme (X - a)^j
+            //printf("(X - %f)^%d = ", a, j);
+            afficher_polynome(P_temp);
+            
             float facteur_rang_j = evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
-
             int k;
             for(k = 0; k <= P_temp.degre; k++) //Création du terme complet de rang j dans le polynome de la formule
                 P_temp.liste[k] *= facteur_rang_j;
@@ -298,6 +299,16 @@ void archivage_derivation(Polynome P, Polynome P_deriv){
     fclose(fichier);
 }
 
+void archivage_derivation_nieme(Polynome P, Polynome P_deriv, int n){
+    FILE* fichier = fopen("log.txt", "a");
+    fprintf(fichier, "DERIVATION %d FOIS de ", n);
+    impression_polynome(fichier, P);
+    fprintf(fichier, "%s", " : P n-ième = ");
+    impression_polynome(fichier, P_deriv);
+    fprintf(fichier, "\n\n");
+    fclose(fichier);
+}
+
 void archivage_integrale(Polynome P, float d, float f, float integrale){
     FILE* fichier = fopen("log.txt", "a");
     fprintf(fichier, "%s%f%s%f%s", "INTEGRATION : intégrale sur [", d, ", ", f, "] de ");
@@ -375,3 +386,53 @@ void afficher_polynome(Polynome P){
         printf("\n");
     }
 }
+
+/*
+Polynome creer_polynome_2(){
+    int n;
+    Polynome P;
+    printf("Tapez 0 si vous voulez ajouter un polynômes à la main \n");
+    printf("Tapez 1 si vous voulez ajouter un polynomes depuis un fichier texte\n");
+    printf("Votre choix : ");
+    scanf("%d",&n);
+    switch(n){
+        case 0:
+            printf("\nSaisir le degré : ");
+            scanf("%d", &P.degre);
+            P.liste = (float*)malloc((P.degre + 1)*sizeof(float));
+            if(P.degre == 0){
+                printf("Saisir le coéfficient : ");
+                scanf("%f", &P.liste[0]);
+            }
+            else{
+                int i;
+                printf("\nSaisir le coéfficients du rang associé.\nSi coéfficient nul, saisir 0.\n");
+                for(i = 0; i <= P.degre; i++){
+                    printf("rang %d : ", i);
+                    scanf("%f", &P.liste[i]);
+                    //l'exposant correspond à l'indice du coéfficient dans le tableau.
+                }
+            }
+            break;
+
+        case 1:
+            int cestbon;
+            printf("Entrez la suite des coefficients dans entrees.txt.\nLe degré en premier, puis les coéfficients du range 0 au dernier.\n");
+            printf("C'est tout bon ? Entrez 1 quand c'est bon :");
+            scanf("%d", &cestbon);
+            if(cestbon){
+                FILE* fichier_i = fopen("entrees.txt", "w");
+                fscanf(fichier_i, "%d", &P.degre);
+                printf("deg = %d\n", P.degre);
+                int i;
+                for(i = 1; i <= P.degre + 1; i++){
+                    fscanf(fichier_i, "%f", &P.liste[i - 1]);
+                    printf("liste[%d] = %f - ", i, P.liste[i - 1]);
+                }
+                fclose(fichier_i);
+            }
+            break;
+    }
+    return P;
+}
+*/
