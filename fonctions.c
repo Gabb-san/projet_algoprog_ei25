@@ -387,13 +387,12 @@ void afficher_polynome(Polynome P){
     }
 }
 
-/*
+
 Polynome creer_polynome_2(){
     int n;
     Polynome P;
-    printf("Tapez 0 si vous voulez ajouter un polynômes à la main \n");
-    printf("Tapez 1 si vous voulez ajouter un polynomes depuis un fichier texte\n");
-    printf("Votre choix : ");
+    printf("Tapez 0 si vous voulez ajouter un polynômes à la main ?");
+    printf("Tapez 1 si vous voulez ajouter un polynomes depuis un fichier texte");
     scanf("%d",&n);
     switch(n){
         case 0:
@@ -406,33 +405,28 @@ Polynome creer_polynome_2(){
             }
             else{
                 int i;
-                printf("\nSaisir le coéfficients du rang associé.\nSi coéfficient nul, saisir 0.\n");
+                printf("\nSaisir le coéfficient du rang associé.\nSi coéfficient nul, saisir 0.\n");
                 for(i = 0; i <= P.degre; i++){
                     printf("rang %d : ", i);
                     scanf("%f", &P.liste[i]);
                     //l'exposant correspond à l'indice du coéfficient dans le tableau.
                 }
             }
-            break;
-
+            return P;
         case 1:
-            int cestbon;
-            printf("Entrez la suite des coefficients dans entrees.txt.\nLe degré en premier, puis les coéfficients du range 0 au dernier.\n");
-            printf("C'est tout bon ? Entrez 1 quand c'est bon :");
-            scanf("%d", &cestbon);
-            if(cestbon){
-                FILE* fichier_i = fopen("entrees.txt", "w");
-                fscanf(fichier_i, "%d", &P.degre);
-                printf("deg = %d\n", P.degre);
-                int i;
-                for(i = 1; i <= P.degre + 1; i++){
-                    fscanf(fichier_i, "%f", &P.liste[i - 1]);
-                    printf("liste[%d] = %f - ", i, P.liste[i - 1]);
-                }
-                fclose(fichier_i);
+            FILE* fichier;
+            char* nom_fichier;
+            printf("Entrez le nom du fichier : \n");
+            scanf("%s", nom_fichier);
+            fichier = fopen(nom_fichier,"r");
+            int max = 0;
+            int i = 0;
+            int *deg = malloc(150 * sizeof(int));
+            while( fscanf(fichier,"%f %d",&P.liste[i],&deg[i])==2){
+                i++;
+                if (deg[i]>max) max = deg[i];
             }
-            break;
-    }
-    return P;
+            P.degre = max;
+            return P;
+        }
 }
-*/

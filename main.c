@@ -3,7 +3,7 @@
 
 
 int main(){
-    /*
+    
     //Affichage du menu  
     printf("Librairie d'opérateurs polynomiaux de Paul CHIRON et Gabriel CHATELAIN\nBienvenu.\n\n");
     
@@ -151,49 +151,8 @@ int main(){
                 break;
         }
     }
-    /*
-    Polynome P;
-    P.degre = 7;
-    P.liste = (float*)malloc(P.degre*sizeof(float));
-    P.liste[0] = 7.5;
-    P.liste[1] = 5.5;
-    P.liste[2] = 0; 
-    P.liste[3] = 66.13;
-    P.liste[4] = 0;
-    P.liste[5] = 0;
-    P.liste[6] = 0;
-    P.liste[7] = -45;
-    printf("%f\n", intergration(-7, 2.3, P));
-    */
-    Polynome P;
-    P.degre = 4;
-    P.liste = (float*)malloc(P.degre*sizeof(float));
-    P.liste[0] = 1;
-    P.liste[1] = 1;
-    P.liste[2] = 1; 
-    P.liste[3] = 1;
-    P.liste[4] = 1;
-    float a = 2;
-    float k = 3;
-    Polynome Facteur; //Polynome de forme (X - a)
-    Facteur.degre = 1;
-    Facteur.liste = (float*)malloc(2*sizeof(float));
-    Facteur.liste[0] = (-1)*a;
-    Facteur.liste[1] = 1;
-    int j; 
-    for(j = 0; j <= k; j++){
-        Polynome P_temp = puissance_polynomiale(Facteur, j);
-        afficher_polynome(P_temp);
-        float facteur_rang_j = evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
-        printf("facteur_rang_j = %f\n", facteur_rang_j);
-        int k;
-        for(k = 0; k <= P_temp.degre; k++){ //Création du terme complet de rang j dans le polynome de la formule
-            printf("P_temp.liste[k] = %f\n", P_temp.liste[k]);
-            P_temp.liste[k] *= facteur_rang_j;
-            printf("P_temp.liste[k] = %f\n", P_temp.liste[k]);
-        }
-        free(P_temp.liste);
-    }
     
+    Polynome P = creer_polynome_2();
+    afficher_polynome(P);
     return 0;
 }
