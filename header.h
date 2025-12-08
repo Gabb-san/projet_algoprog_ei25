@@ -108,4 +108,5 @@ void afficher_polynome(Polynome P);
 
 
 Polynome creer_polynome_2();
+Polynome creer_polynome_3();
 

@@ -152,7 +152,9 @@ int main(){
         }
     }
     
-    Polynome P = creer_polynome_2();
+    /*
+    Polynome P = creer_polynome_3();
     afficher_polynome(P);
+    */
     return 0;
 }

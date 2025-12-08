@@ -152,31 +152,32 @@ Polynome DL_enA_ordreN(Polynome P, float a, int n){
         DL.liste[0] = evaluation_polynome(P, a);
         int i;
         for(i = 1; i <= n; i++){
-            DL.liste[i] = 0;
+            DL.liste[i] = 0.0;
         }
         printf("degré du DL : %d\n", DL.degre);
+
         //Calcul du DL :
         Polynome Facteur; //Polynome de forme (X - a)
-        Facteur.degre = 1;
-        Facteur.liste = (float*)malloc(2*sizeof(float));
-        Facteur.liste[0] = (-1)*a;
-        Facteur.liste[1] = 1;
+        Polynome P_temp;
         
         int j;
         for(j = 1; j <= n; j++){ //Création et addition à DL des termes de la formule donnée.
-            Polynome P_temp = puissance_polynomiale(Facteur, j); //Polynome de la forme (X - a)^j
-            //printf("(X - %f)^%d = ", a, j);
-            afficher_polynome(P_temp);
-            
+            Facteur.degre = 1;
+            Facteur.liste = (float*)malloc(2*sizeof(float));
+            Facteur.liste[0] = (-1)*2;
+            Facteur.liste[1] = 1;
+
+            P_temp = puissance_polynomiale(Facteur, j); //Polynome de forme (X - a)^j
             float facteur_rang_j = evaluation_polynome(derivee_nieme(P, j), a)/(float)factorielle(j);
+
             int k;
             for(k = 0; k <= P_temp.degre; k++) //Création du terme complet de rang j dans le polynome de la formule
                 P_temp.liste[k] *= facteur_rang_j;
             
             DL = addition(DL, P_temp);
+            afficher_polynome(DL);
             free(P_temp.liste);
         }
-        free(Facteur.liste);
     }
     else
         DL = P; //Si l'ordre du DL est supérieur au degré du polynome, le DL est le polynome.
@@ -429,4 +430,52 @@ Polynome creer_polynome_2(){
             P.degre = max;
             return P;
         }
+}
+
+Polynome creer_polynome_3(){
+    int n;
+    Polynome P;
+    printf("Tapez 0 si vous voulez ajouter un polynômes à la main \n");
+    printf("Tapez 1 si vous voulez ajouter un polynomes depuis un fichier texte\n");
+    printf("Votre choix : ");
+    scanf("%d",&n);
+    switch(n){
+        case 0:
+            printf("\nSaisir le degré : ");
+            scanf("%d", &P.degre);
+            P.liste = (float*)malloc((P.degre + 1)*sizeof(float));
+            if(P.degre == 0){
+                printf("Saisir le coéfficient : ");
+                scanf("%f", &P.liste[0]);
+            }
+            else{
+                int i;
+                printf("\nSaisir le coéfficients du rang associé.\nSi coéfficient nul, saisir 0.\n");
+                for(i = 0; i <= P.degre; i++){
+                    printf("rang %d : ", i);
+                    scanf("%f", &P.liste[i]);
+                    //l'exposant correspond à l'indice du coéfficient dans le tableau.
+                }
+            }
+            break;
+
+        case 1:
+            int cestbon;
+            printf("Entrez la suite des coefficients dans entrees.txt.\nLe degré en premier, puis les coéfficients du range 0 au dernier.\n");
+            printf("C'est tout bon ? Entrez 1 quand c'est bon :");
+            scanf("%d", &cestbon);
+            if(cestbon){
+                FILE* fichier_i = fopen("entrees.txt", "w");
+                fscanf(fichier_i, "%d", &P.degre);
+                printf("deg = %d\n", P.degre);
+                int i;
+                for(i = 1; i <= P.degre + 1; i++){
+                    fscanf(fichier_i, "%f", &P.liste[i - 1]);
+                    printf("liste[%d] = %f - ", i, P.liste[i - 1]);
+                }
+                fclose(fichier_i);
+            }
+            break;
+    }
+    return P;
 }
